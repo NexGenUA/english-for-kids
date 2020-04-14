@@ -1,0 +1,28 @@
+@mixin card {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 250px;
+  overflow: hidden;
+  margin: 20px;
+  position: relative;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 3px rgb(230, 230, 230);
+  transition: transform .5s ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,.4);
+  }
+}
+
+@mixin arrows {
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+}

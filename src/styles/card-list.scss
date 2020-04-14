@@ -1,0 +1,65 @@
+@import 'mixin';
+
+.card-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+
+}
+
+.cards-collect {
+  perspective: 500px;
+
+
+  & .cards-collect__rotate {
+    @include card;
+    position: relative;
+    width: 300px;
+    height: 250px;
+    transform-style: preserve-3d;
+
+    &.reverse {
+      transform: rotateY(180deg);
+    }
+  }
+
+  & .cards-collect__front-side {
+    position: absolute;
+    background-color: white;
+    height: 100%;
+  }
+
+  & .cards-collect__back-side {
+    position: absolute;
+    background-color: white;
+    height: 100%;
+    transform: rotateY(180deg);
+  }
+
+  & .cards-collect__image-wrap {
+
+    & .cards-collect__image {
+      width: 300px;
+    }
+
+  }
+
+  & .cards-collect__rotate-arrows {
+    @include arrows;
+    background: url(../assets/cards-img/arrows.gif);
+
+    &:hover + .cards-collect__static-arrows {
+      display: none;
+    }
+  }
+
+  & .cards-collect__static-arrows {
+    @include arrows;
+    background: url(../assets/cards-img/arrows.png);
+
+    &:hover {
+      display: none;
+    }
+  }
+}

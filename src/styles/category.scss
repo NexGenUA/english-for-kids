@@ -1,0 +1,51 @@
+@import 'var';
+@import 'mixin';
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+
+  & .category-card {
+    @include card;
+    align-items: center;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100px;
+      background: linear-gradient($play-color, $play-color-gradient);
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 0;
+    }
+  }
+
+  & .category-card__image {
+    height: 140px;
+    position: relative;
+    left: -30px;
+  }
+
+  & .category-card__image-wrap {
+    position: relative;
+    top: -20px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid white;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  & .category-card__title {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    font-size: 20px;
+    color: $play-color;
+    font-weight: 600;
+  }
+}
