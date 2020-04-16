@@ -5,6 +5,8 @@ import correct from '../../assets/cards-audio/correct.mp3';
 import repeat from '../../assets/cards-img/repeat.svg';
 import star from '../../assets/cards-img/star.svg';
 import starWin from '../../assets/cards-img/star-win.svg';
+import surprised from '../../assets/cards-audio/surprised.mp3';
+import failure from '../../assets/cards-audio/failure.mp3';
 
 class CardListPageComponent extends Component{
   constructor(config) {
@@ -21,6 +23,8 @@ class CardListPageComponent extends Component{
     this.correct = [];
     this.isSound = false;
     this.gameOver = false;
+    this.correctAnswer = 0;
+    this.errorAnswer = 0;
   }
 
   events() {
@@ -75,15 +79,23 @@ class CardListPageComponent extends Component{
     const collectionName = router.getUrl();
     const cardListContainer = document.getElementById('card-list-container');
     const cardList = document.getElementById('card-list');
+    const gamePoints = document.getElementById('game-points');
+    const repeatButton = document.getElementById('start-game');
+
+    if (repeatButton) {
+      repeatButton.innerText = 'Start game';
+      repeatButton.classList.remove('repeat');
+    }
+    if (gamePoints) gamePoints.innerHTML = '';
 
     if (!cardListContainer || !cardList) return;
 
-    cardList.insertAdjacentHTML('afterbegin', '<div class="game-points" id="game-points"></div>');
+    cardListContainer.insertAdjacentHTML('afterbegin', '<div class="game-points" id="game-points"></div>');
 
     const audio = document.createElement('audio');
 
     audio.setAttribute('id', 'audio-play');
-    cardList.append(audio);
+    cardListContainer.append(audio);
 
     const addCardList = (list) => cardListContainer.insertAdjacentHTML('beforeend', `
     <div class="cards-collect play" data-audio="${list.audioSrc}" data-card-name="${list.word}">
@@ -129,6 +141,12 @@ class CardListPageComponent extends Component{
       this.audio.play();
       return;
     }
+    const repeatButton = document.getElementById('start-game');
+    if (repeatButton) {
+      repeatButton.innerHTML = '';
+      repeatButton.classList.add('repeat');
+    }
+
     this.audio = document.getElementById('audio-play');
     this.playList.sort(() => Math.random() - 0.5);
     this.gameOn = true;
@@ -141,13 +159,41 @@ class CardListPageComponent extends Component{
     if (this.gameOver) return;
 
     const src = this.playList[this.count];
+    const mainPageLink = document.getElementById('main-page');
+    const clickEvent = new Event('click', { bubbles:true });
 
     if (!src) {
       this.gameOver = true;
       this.gameOn = false;
-      this.audio.src = correct;
+
+      const showScreen = target => {
+        target.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+          document.body.style.overflow = '';
+          target.style.display = '';
+          mainPageLink.dispatchEvent(clickEvent);
+        }, 2000);
+      };
+
+      if (this.errorAnswer) {
+        this.audio.src = failure;
+        const errors = this.errorAnswer;
+        const loseScreen = document.getElementById('lose-screen');
+        const errorMessage = document.getElementById('error-message');
+
+        errorMessage.innerHTML = `${errors} error${errors > 1 ? 's' : ''}`;
+
+        showScreen(loseScreen);
+
+      } else {
+        this.audio.src = surprised;
+        const winScreen = document.getElementById('win-screen');
+
+        showScreen(winScreen);
+      }
       this.audio.play();
-      console.log('game over');
       if (this.isSound) return;
       setTimeout(() => this.isSound = false,500);
       return;
@@ -181,17 +227,19 @@ class CardListPageComponent extends Component{
       const word = card.dataset.cardName;
 
       if (this.correct.includes(word)) return;
+      this.isSound = true;
 
       if (this.playList[this.count].word === word) {
         card.classList.add('correct');
         this.correct.push(word);
         this.count++;
-        this.isSound = true;
         this.cardSound(correct);
 
         gamePoints.insertAdjacentHTML('beforeend', `
           <img src="${starWin}" class="img-stars">
         `);
+
+        this.correctAnswer++;
 
         setTimeout(() => {
 
@@ -200,12 +248,13 @@ class CardListPageComponent extends Component{
           this.cardSound();
         }, 500);
       } else {
-        this.isSound = true;
         this.cardSound(err);
 
         gamePoints.insertAdjacentHTML('beforeend', `
           <img src="${star}" class="img-stars">
         `);
+
+        this.errorAnswer++;
 
         setTimeout(() => {
 

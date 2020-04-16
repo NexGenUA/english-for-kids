@@ -47,3 +47,11 @@
   width: 32px;
   transition: $transition;
 }
+
+@mixin end-game-img {
+  width: 25vw;
+  min-width: 300px;
+  min-height: 250px;
+  height: 25vw;
+  background-size: contain;
+}

@@ -12,10 +12,11 @@
     position: absolute;
     height: 40px;
     width: 100%;
-    top: -10px;
+    top: -35px;
     display: flex;
     justify-content: flex-end;
     overflow: hidden;
+    margin: 0 10px;
 
     & .img-stars {
       width: 40px;
@@ -41,6 +42,23 @@
 
     & .start-game {
       display: block;
+      position: relative;
+      transition: all .3s ease;
+
+      &.repeat {
+        width: 50px;
+        border-radius: 50%;
+
+        &::after {
+          content: url(../assets/cards-img/repeat.svg);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 30px;
+          height: 30px;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
   }
 
@@ -148,5 +166,43 @@
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
+  }
+}
+
+.win-screen, .lose-screen {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: url(../assets/background.png);
+  display: none;
+}
+
+.win-screen {
+
+  & .win-img {
+    background: url(../assets/cards-img/success.jpg) no-repeat;
+    @include end-game-img;
+  }
+}
+
+
+.lose-screen {
+
+  & .lose-img {
+    background: url(../assets/cards-img/failure.jpg) no-repeat;
+    @include end-game-img;
+  }
+
+  & .error-message {
+    margin-bottom: 10px;
+    color: coral;
+    font-weight: 600;
+    font-size: 25px;
   }
 }
