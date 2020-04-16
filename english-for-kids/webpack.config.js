@@ -48,14 +48,14 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
         loader: 'file-loader',
-          options: { outputPath: 'fonts' },
+          options: { outputPath: 'assets/fonts' },
       },
       {
         test: /\.(jpg|jpeg|png|gif)$/i,
         loader: 'file-loader',
         options: {
           name: '[hash:7].[name].[ext]',
-          outputPath: 'img'
+          outputPath: 'assets/img'
         },
       },
       {
@@ -63,7 +63,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[hash:7].[name].[ext]',
-          outputPath: 'audio'
+          outputPath: 'assets/audio'
         },
       },
     ],

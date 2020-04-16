@@ -2,6 +2,9 @@ import { Component, router, util } from "../../lib";
 import { cards } from '../../lib/data/cards';
 import err from '../../assets/cards-audio/error.mp3';
 import correct from '../../assets/cards-audio/correct.mp3';
+import repeat from '../../assets/cards-img/repeat.svg';
+import star from '../../assets/cards-img/star.svg';
+import starWin from '../../assets/cards-img/star-win.svg';
 
 class CardListPageComponent extends Component{
   constructor(config) {
@@ -68,13 +71,21 @@ class CardListPageComponent extends Component{
     this.watchCheck();
     this.resetValues();
     this.toggleTheme();
+
     const collectionName = router.getUrl();
-    const cardList = document.getElementById('card-list-container');
-    if (!cardList) return;
+    const cardListContainer = document.getElementById('card-list-container');
+    const cardList = document.getElementById('card-list');
+
+    if (!cardListContainer || !cardList) return;
+
+    cardList.insertAdjacentHTML('afterbegin', '<div class="game-points" id="game-points"></div>');
+
     const audio = document.createElement('audio');
+
     audio.setAttribute('id', 'audio-play');
     cardList.append(audio);
-    const addCardList = (list) => cardList.insertAdjacentHTML('beforeend', `
+
+    const addCardList = (list) => cardListContainer.insertAdjacentHTML('beforeend', `
     <div class="cards-collect play" data-audio="${list.audioSrc}" data-card-name="${list.word}">
       <div class="hover-correct"></div>
       <div class="cards-collect__rotate">
@@ -152,6 +163,9 @@ class CardListPageComponent extends Component{
 
   playGame() {
     const gameArea = document.getElementById('card-list-container');
+    const gamePoints = document.getElementById('game-points');
+
+    if (!gameArea || !gamePoints) return;
 
     const gameCore = e => {
 
@@ -175,6 +189,10 @@ class CardListPageComponent extends Component{
         this.isSound = true;
         this.cardSound(correct);
 
+        gamePoints.insertAdjacentHTML('beforeend', `
+          <img src="${starWin}" class="img-stars">
+        `);
+
         setTimeout(() => {
 
           setTimeout(() => this.isSound = false,500);
@@ -184,6 +202,10 @@ class CardListPageComponent extends Component{
       } else {
         this.isSound = true;
         this.cardSound(err);
+
+        gamePoints.insertAdjacentHTML('beforeend', `
+          <img src="${star}" class="img-stars">
+        `);
 
         setTimeout(() => {
 
