@@ -11,7 +11,8 @@ const routes = new Set([
   '/animal-a',
   '/animal-b',
   '/clothes',
-  '/emotion'
+  '/emotion',
+  '/stats'
 ]);
 const PORT = process.env.PORT || 5000;
 
