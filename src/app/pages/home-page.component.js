@@ -6,7 +6,8 @@ class HomePageComponent extends Component {
     super(config)
   }
 
-   onLoad() {
+  onLoad() {
+    this.toggleTheme();
     const categories = document.getElementById('categories-list');
     const addCategories = (category) => categories.insertAdjacentHTML('beforeend', `
     <a class="category-card play" href="${category.url}">
@@ -16,7 +17,7 @@ class HomePageComponent extends Component {
       <span class="category-card__title">${category.name}</span>
      </a>
     `);
-    cards().then(obj => obj.categories.forEach(addCategories));
+    cards.categories.forEach(addCategories);
   }
 }
 

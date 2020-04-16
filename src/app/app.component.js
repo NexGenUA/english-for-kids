@@ -2,7 +2,7 @@ import { Component } from '../lib';
 
 class AppComponent extends Component{
   constructor(config) {
-    super(config)
+    super(config);
   }
 }
 

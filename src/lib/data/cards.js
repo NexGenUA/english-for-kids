@@ -1,7 +1,7 @@
-import * as img  from '../../assets/cards-img/';
+import * as img from '../../assets/cards-img/';
 import * as audio from '../../assets/cards-audio';
 
-export const cards = async () => ({
+export const cards = {
   categories: [
     {
       name: 'Action (set A)',
@@ -444,4 +444,4 @@ export const cards = async () => ({
       audioSrc: audio.laugh
     }
   ]
-});
+};

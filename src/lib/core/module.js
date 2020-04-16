@@ -8,6 +8,11 @@ export class MainModule {
   }
 
   start() {
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const switchGame = document.getElementById('switch-game');
+      const gameMode = localStorage.getItem('gameMode');
+      switchGame.checked = gameMode === 'true';
+    });
     this.init();
     if (this.routes) this.initRoutes();
   }

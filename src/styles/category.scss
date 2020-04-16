@@ -5,17 +5,21 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 50px;
+  margin: 50px 0;
 
   & .category-card {
     @include card;
+    background-color: white;
     align-items: center;
+    transition: background .3s ease;
+    user-select: none;
 
     &::after {
       content: "";
       width: 100%;
       height: 100px;
       background: linear-gradient($play-color, $play-color-gradient);
+      border-radius: 5px 5px 0 0;
       position: absolute;
       left: 0;
       top: 0;
@@ -47,5 +51,18 @@
     font-size: 20px;
     color: $play-color;
     font-weight: 600;
+  }
+
+  &.game-on {
+
+    & .category-card {
+
+      &::after {
+        background: $gradient-game-on;
+      }
+    }
+    & .category-card__title {
+      color: $game-on-color;
+    }
   }
 }

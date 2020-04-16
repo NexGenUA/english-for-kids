@@ -1,23 +1,91 @@
 @import 'mixin';
+@import 'var';
 
 .card-list {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin: 25px 0;
   flex-wrap: wrap;
+  position: relative;
 
+  &.game-on {
+
+    & .cards-collect__front-side {
+      background-size: 300px 250px;
+    }
+
+    & .cards-collect__rotate-arrows {
+      display: none;
+    }
+    & .cards-collect__static-arrows {
+        display: none;
+    }
+    & .cards-collect__word {
+      display: none;
+    }
+
+    & .start-game {
+      display: block;
+    }
+  }
+
+  & .start-game {
+    max-width: 500px;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    height: 50px;
+    background: $gradient-game-on;
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: button;
+    display: none;
+    margin-bottom: 50px;
+
+    &:hover{
+      filter: brightness(1.1);
+      font-size: 27px;
+    }
+
+    &:active {
+      font-size: 27px;
+      transform: translateY(1px);
+    }
+  }
 }
 
 .cards-collect {
   perspective: 500px;
+  position: relative;
 
+  & .hover-correct {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 250px;
+    background-color: white;
+    opacity: .5;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1;
+    display: none;
+  }
+
+  &.correct {
+
+    & .hover-correct {
+      display: block;
+    }
+  }
 
   & .cards-collect__rotate {
     @include card;
-    position: relative;
-    width: 300px;
-    height: 250px;
     transform-style: preserve-3d;
+
 
     &.reverse {
       transform: rotateY(180deg);
@@ -25,24 +93,12 @@
   }
 
   & .cards-collect__front-side {
-    position: absolute;
-    background-color: white;
-    height: 100%;
+    @include cards-rotate;
   }
 
   & .cards-collect__back-side {
-    position: absolute;
-    background-color: white;
-    height: 100%;
+    @include cards-rotate;
     transform: rotateY(180deg);
-  }
-
-  & .cards-collect__image-wrap {
-
-    & .cards-collect__image {
-      width: 300px;
-    }
-
   }
 
   & .cards-collect__rotate-arrows {
@@ -61,5 +117,21 @@
     &:hover {
       display: none;
     }
+  }
+
+  & .cards-collect__word {
+    display: flex;
+    margin-top: 200px;
+    height: 50px;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    color: rgb(105, 105, 105);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
 }

@@ -19,12 +19,20 @@
   font-weight: 500;
   line-height: 42px;
   z-index: 5;
+
   & a {
     text-decoration: none;
+    transition: all .3s ease;
+    display: inline-block;
+
+
     &:visited {
       color:  inherit;
     }
+
     &:hover {
+      transform: translate(-3px, 1px);
+      font-size: 27px;
       color:  inherit;
       text-decoration: underline;
     }
@@ -32,5 +40,8 @@
 
   .active-menu-link {
     text-decoration: underline;
+  }
+  &.game-on {
+    background: $gradient-game-on;
   }
 }

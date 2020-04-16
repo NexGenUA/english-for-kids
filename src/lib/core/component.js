@@ -21,7 +21,25 @@ export class Component {
     for (const event in events) {
       const selectorEvent = event.split(' ');
       const el = this.el.querySelector(selectorEvent[1]);
-      el.addEventListener(selectorEvent[0], this[events[event]])
+      el.addEventListener(selectorEvent[0], this[events[event]].bind(this))
+    }
+  }
+
+  toggleTheme() {
+    const gameMode = localStorage.getItem('gameMode');
+    const toggle = gameMode === 'true' ? 'add' : 'remove';
+    const homePage = document.getElementById('categories-list');
+    const menu = document.getElementById('menu__list');
+    const cardList = document.getElementById('card-list');
+
+    if (homePage) {
+      menu.classList[toggle]('game-on');
+      homePage.classList[toggle]('game-on');
+    }
+
+    if (cardList) {
+      menu.classList[toggle]('game-on');
+      cardList.classList[toggle]('game-on');
     }
   }
 }

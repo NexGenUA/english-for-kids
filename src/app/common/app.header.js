@@ -5,6 +5,20 @@ class AppHeader extends Component{
     super(config)
   }
 
+  events() {
+    return {
+     'change #switch-game-mode': 'changeGameMode',
+    }
+  }
+
+  changeGameMode(e) {
+    const target = e.currentTarget;
+    if (!target) return;
+    const checkbox = target.querySelector('.check');
+    localStorage.setItem('gameMode', checkbox.checked);
+    this.toggleTheme();
+  }
+
   onLoad() {
     const menu = document.getElementById('menu__list');
     const hamburger = document.getElementById('menu__hamburger');

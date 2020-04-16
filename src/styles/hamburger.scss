@@ -1,16 +1,5 @@
-$hamburger-line: rgb(112, 198, 222);
-$transition: all .2s linear;
-
-@mixin hamburger-lines {
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  background-color: $hamburger-line;
-  border-radius: 2px;
-  height: 4px;
-  width: 32px;
-  transition: $transition;
-}
+@import 'mixin';
+@import 'var';
 
 .menu__hamburger {
   display: inline-block;
