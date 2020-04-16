@@ -112,6 +112,8 @@ class CardListPageComponent extends Component{
   }
 
   startGame(e) {
+    this.isSound = true;
+    setTimeout(() => this.isSound = false,500);
     if (this.gameOn) {
       this.audio.play();
       return;
@@ -126,48 +128,69 @@ class CardListPageComponent extends Component{
   cardSound(audioSrc) {
     if (!this.gameOn) return;
     if (this.gameOver) return;
+
     const src = this.playList[this.count];
+
     if (!src) {
       this.gameOver = true;
       this.gameOn = false;
       this.audio.src = correct;
       this.audio.play();
       console.log('game over');
+      if (this.isSound) return;
+      setTimeout(() => this.isSound = false,500);
       return;
     }
+
     if (!this.audio) return;
+
     this.audio.src = audioSrc || src.audioSrc;
     this.audio.play();
+    if (this.isSound) return;
+    setTimeout(() => this.isSound = false,500);
   }
 
   playGame() {
     const gameArea = document.getElementById('card-list-container');
+
     const gameCore = e => {
+
       if (!this.gameOn) {
         gameArea.removeEventListener('click', gameCore);
         return;
       }
+
       if (this.isSound) return;
+
       const card = e.target.closest('.play');
+      if (!card) return;
       const word = card.dataset.cardName;
+
       if (this.correct.includes(word)) return;
+
       if (this.playList[this.count].word === word) {
         card.classList.add('correct');
         this.correct.push(word);
         this.count++;
         this.isSound = true;
         this.cardSound(correct);
+
         setTimeout(() => {
-          this.isSound = false;
+
+          setTimeout(() => this.isSound = false,500);
+
           this.cardSound();
-        }, 1000);
+        }, 500);
       } else {
         this.isSound = true;
         this.cardSound(err);
+
         setTimeout(() => {
-          this.isSound = false;
+
+          setTimeout(() => this.isSound = false,500);
+
           this.cardSound();
-        }, 1000);
+        }, 500);
       }
     };
 
