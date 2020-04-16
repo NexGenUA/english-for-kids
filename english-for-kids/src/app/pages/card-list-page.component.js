@@ -50,7 +50,7 @@ class CardListPageComponent extends Component{
 
   rotateCard(e) {
     const target = e.target;
-    if (!target || !target.classList.contains('rotate-card')) return;
+    if (!target || !target.closest('.can-rotate')) return;
     const card = target.closest('.cards-collect__rotate');
     if (!card) return;
     card.classList.add('reverse');
@@ -111,8 +111,10 @@ class CardListPageComponent extends Component{
             <span>${list.translation}</span>
             </div>
         </div>
-        <span class="cards-collect__rotate-arrows rotate-card"></span>
-        <span class="cards-collect__static-arrows"></span>
+        <div class="can-rotate">
+          <span class="cards-collect__rotate-arrows rotate-card"></span>
+          <span class="cards-collect__static-arrows"></span>
+        </div>
       </div>
     </div>
     `);

@@ -133,7 +133,7 @@ export const cards = {
     },
     {
       word: 'skip',
-      translation: 'пропускать, прыгать',
+      translation: 'прыгать',
       image: img.skip,
       audioSrc: audio.skip
     },
