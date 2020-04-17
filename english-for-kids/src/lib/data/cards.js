@@ -14,14 +14,14 @@ export const cards = {
       url: '/action-b'
     },
     {
-      name: 'Action (set C)',
-      src: img.drop,
-      url: '/action-c'
+      name: 'Outdoors',
+      src: img.outdoors,
+      url: '/outdoors'
     },
     {
-      name: 'Adjective',
-      src: img.friendly,
-      url: '/adjective'
+      name: 'House',
+      src: img.house,
+      url: '/house'
     },
     {
       name: 'Animal (set A)',
@@ -70,10 +70,10 @@ export const cards = {
       audioSrc: audio.draw
     },
     {
-      word: 'fish',
+      word: 'fishing',
       translation: 'ловить рыбу',
       image: img.fish,
-      audioSrc: audio.fish
+      audioSrc: audio.fishing
     },
     {
       word: 'fly',
@@ -144,104 +144,104 @@ export const cards = {
       audioSrc: audio.swim
     }
   ],
-  'action-c':   [
+  'outdoors':   [
     {
-      word: 'argue',
-      translation: 'спорить',
-      image: img.argue,
-      audioSrc: audio.argue
+      word: 'sidewalk',
+      translation: 'тротуар',
+      image: img.sidewalk,
+      audioSrc: audio.sidewalk
     },
     {
-      word: 'build',
-      translation: 'строить',
-      image: img.build,
-      audioSrc: audio.build
+      word: 'road',
+      translation: 'дорога',
+      image: img.road,
+      audioSrc: audio.road
     },
     {
-      word: 'carry',
-      translation: 'нести',
-      image: img.carry,
-      audioSrc: audio.carry
+      word: 'tree',
+      translation: 'дерево',
+      image: img.tree,
+      audioSrc: audio.tree
     },
     {
-      word: 'catch',
-      translation: 'ловить',
-      image: img.catch1,
-      audioSrc: audio.catch1
+      word: 'grass',
+      translation: 'трава',
+      image: img.grass,
+      audioSrc: audio.grass
     },
     {
-      word: 'drive',
-      translation: 'водить машину',
-      image: img.drive,
-      audioSrc: audio.drive
+      word: 'river',
+      translation: 'река',
+      image: img.river,
+      audioSrc: audio.river
     },
     {
-      word: 'drop',
-      translation: 'падать',
-      image: img.drop,
-      audioSrc: audio.drop
+      word: 'bus',
+      translation: 'автобус',
+      image: img.bus,
+      audioSrc: audio.bus
     },
     {
-      word: 'pull',
-      translation: 'тянуть',
-      image: img.pull,
-      audioSrc: audio.pull
+      word: 'train',
+      translation: 'поезд',
+      image: img.train,
+      audioSrc: audio.train
     },
     {
-      word: 'push',
-      translation: 'толкать',
-      image: img.push,
-      audioSrc: audio.push
+      word: 'sun',
+      translation: 'солнце',
+      image: img.sun,
+      audioSrc: audio.sun
     }
   ],
-  'adjective': [
+  'house': [
     {
-      word: 'big',
-      translation: 'большой',
-      image: img.big,
-      audioSrc: audio.big
+      word: 'table',
+      translation: 'стол',
+      image: img.table,
+      audioSrc: audio.table
     },
     {
-      word: 'small',
-      translation: 'маленький',
-      image: img.small,
-      audioSrc: audio.small
+      word: 'lamp',
+      translation: 'лампа',
+      image: img.lamp,
+      audioSrc: audio.lamp
     },
     {
-      word: 'fast',
-      translation: 'быстрый',
-      image: img.fast,
-      audioSrc: audio.fast
+      word: 'door',
+      translation: 'дверь',
+      image: img.door,
+      audioSrc: audio.door
     },
     {
-      word: 'slow',
-      translation: 'медленный',
-      image: img.slow,
-      audioSrc: audio.slow
+      word: 'cupboard',
+      translation: 'шкаф',
+      image: img.cupboard,
+      audioSrc: audio.cupboard
     },
     {
-      word: 'friendly',
-      translation: 'дружелюбный',
-      image: img.friendly,
-      audioSrc: audio.friendly
+      word: 'fridge',
+      translation: 'холодильник',
+      image: img.fridge,
+      audioSrc: audio.fridge
     },
     {
-      word: 'unfriendly',
-      translation: 'недружелюбный',
-      image: img.unfriendly,
-      audioSrc: audio.unfriendly
+      word: 'window',
+      translation: 'окно',
+      image: img.window,
+      audioSrc: audio.window
     },
     {
-      word: 'young',
-      translation: 'молодой',
-      image: img.young,
-      audioSrc: audio.young
+      word: 'armchair',
+      translation: 'кресло',
+      image: img.armchair,
+      audioSrc: audio.armchair
     },
     {
-      word: 'old',
-      translation: 'старый',
-      image: img.old,
-      audioSrc: audio.old
+      word: 'television',
+      translation: 'телевизор',
+      image: img.television,
+      audioSrc: audio.television
     }
   ],
   'animal-a': [
@@ -315,7 +315,7 @@ export const cards = {
     },
     {
       word: 'giraffe',
-      translation: 'жирафа',
+      translation: 'жираф',
       image: img.giraffe,
       audioSrc: audio.giraffe
     },

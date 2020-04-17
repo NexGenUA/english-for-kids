@@ -25,6 +25,7 @@ import error1 from './error.mp3';
 import failure from './failure.mp3';
 import fast from './fast.mp3';
 import fish from './fish.mp3';
+import fishing from './fishing.mp3';
 import fly from './fly.mp3';
 import friendly from './friendly.mp3';
 import frog from './frog.mp3';
@@ -65,6 +66,22 @@ import tired from './tired.mp3';
 import turtle from './turtle.mp3';
 import unfriendly from './unfriendly.mp3';
 import young from './young.mp3';
+import table from './table.mp3';
+import lamp from './lamp.mp3';
+import door from './door.mp3';
+import cupboard from './cupboard.mp3';
+import fridge from './fridge.mp3';
+import window from './window.mp3';
+import armchair from './armchair.mp3';
+import television from './television.mp3';
+import sidewalk from './sidewalk.mp3';
+import road from './road.mp3';
+import tree from './tree.mp3';
+import grass from './grass.mp3';
+import river from './river.mp3';
+import bus from './bus.mp3';
+import train from './train.mp3';
+import sun from './sun.mp3';
 
 export {
   angry,
@@ -94,6 +111,7 @@ export {
   failure,
   fast,
   fish,
+  fishing,
   fly,
   friendly,
   frog,
@@ -133,5 +151,21 @@ export {
   tired,
   turtle,
   unfriendly,
-  young
+  young,
+  table,
+  lamp,
+  door,
+  cupboard,
+  fridge,
+  window,
+  armchair,
+  television,
+  sidewalk,
+  road,
+  tree,
+  grass,
+  river,
+  bus,
+  train,
+  sun
 }

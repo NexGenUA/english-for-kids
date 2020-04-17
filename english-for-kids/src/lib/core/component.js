@@ -33,13 +33,13 @@ export class Component {
     const cardList = document.getElementById('card-list');
 
     if (homePage) {
-      menu.classList[toggle]('game-on');
       homePage.classList[toggle]('game-on');
     }
 
     if (cardList) {
-      menu.classList[toggle]('game-on');
       cardList.classList[toggle]('game-on');
     }
+
+    menu.classList[toggle]('game-on');
   }
 }

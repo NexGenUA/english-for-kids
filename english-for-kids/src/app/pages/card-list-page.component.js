@@ -5,7 +5,7 @@ import correct from '../../assets/cards-audio/correct.mp3';
 import repeat from '../../assets/cards-img/repeat.svg';
 import star from '../../assets/cards-img/star.svg';
 import starWin from '../../assets/cards-img/star-win.svg';
-import surprised from '../../assets/cards-audio/surprised.mp3';
+import success from '../../assets/cards-audio/success.mp3';
 import failure from '../../assets/cards-audio/failure.mp3';
 
 class CardListPageComponent extends Component{
@@ -35,17 +35,62 @@ class CardListPageComponent extends Component{
     }
   }
 
+  setStat(word, prop) {
+    const gameStat = this.getStat();
+    let json;
+
+    if (gameStat) {
+      json = JSON.parse(gameStat);
+
+      if (json[word]) {
+        json[word][prop]++;
+      } else {
+        json[word] = this.getFirstClick();
+        json[word][prop]++;
+      }
+    } else {
+      json = {};
+      json[word] = this.getFirstClick();
+      json[word][prop]++;
+    }
+
+    localStorage.setItem('stat', JSON.stringify(json));
+  }
+
+  getFirstClick() {
+    return {
+      click: 0,
+      guessed: 0,
+      error: 0,
+    }
+  }
+
+  getStat() {
+    return localStorage.getItem('stat');
+  }
+
   playSound(e) {
     if (this.backside) return;
+
     const target = e.target;
+
     if (target.classList.contains('cards-collect__rotate-arrows')) return;
+
     const card = target.closest('.cards-collect');
+
     if (!card) return;
+
     const audio = document.querySelector('audio');
     const isGame = localStorage.getItem('gameMode') === 'true';
+
     if (isGame) return;
     audio.src = card.dataset.audio;
     audio.play();
+
+
+    const word = card.dataset.cardName;
+    this.setStat(word, 'click');
+
   }
 
   rotateCard(e) {
@@ -118,6 +163,50 @@ class CardListPageComponent extends Component{
       </div>
     </div>
     `);
+
+    if (!cards[collectionName]) {
+      let json = this.getStat();
+      let difficultWords = [];
+
+      if (json) {
+        json = JSON.parse(json);
+      } else {
+        this.noErrors(cardListContainer);
+        return;
+      }
+
+      for (const [key, value] of Object.entries(json)) {
+
+        if (value.error) {
+          difficultWords.push([key, value.error]);
+        }
+      }
+
+      if (!difficultWords.length) {
+        this.noErrors(cardListContainer);
+        return;
+      }
+
+      difficultWords.sort((x, y) => y[1] - x[1]).splice(8);
+
+      difficultWords = Object.keys(Object.fromEntries(difficultWords));
+
+      const cardsOfWords = [];
+
+      for (const collect in cards) {
+        cards[collect].forEach(card => {
+          const word = card.word;
+          if (word && difficultWords.includes(word)) {
+            cardsOfWords.push(card)
+          }
+        });
+      }
+
+      this.playList = cardsOfWords.map(card => ({ word: card.word, audioSrc: card.audioSrc }));
+      cardsOfWords.forEach(addCardList);
+      return;
+    }
+
     this.playList = cards[collectionName].map(card => ({ word: card.word, audioSrc: card.audioSrc }));
     cards[collectionName].forEach(addCardList);
   }
@@ -126,30 +215,38 @@ class CardListPageComponent extends Component{
     const title = {
       'action-a': 'Action (set A)',
       'action-b': 'Action (set B)',
-      'action-c': 'Action (set C)',
-      'adjective': 'Adjective',
+      'outdoors': 'Outdoors',
+      'house': 'House',
       'animal-a': 'Animal (set A)',
       'animal-b': 'Animal (set B)',
       'clothes': 'Clothes',
       'emotion': 'Emotion',
+      'repeat': 'Repeat difficult words'
     };
     return title[router.getUrl()]
   }
 
   startGame(e) {
     this.isSound = true;
+
+    if (!this.playList) return;
+
     setTimeout(() => this.isSound = false,500);
+
     if (this.gameOn) {
       this.audio.play();
       return;
     }
+
     const repeatButton = document.getElementById('start-game');
+
     if (repeatButton) {
       repeatButton.innerHTML = '';
       repeatButton.classList.add('repeat');
     }
 
     this.audio = document.getElementById('audio-play');
+
     this.playList.sort(() => Math.random() - 0.5);
     this.gameOn = true;
     this.cardSound();
@@ -190,7 +287,7 @@ class CardListPageComponent extends Component{
         showScreen(loseScreen);
 
       } else {
-        this.audio.src = surprised;
+        this.audio.src = success;
         const winScreen = document.getElementById('win-screen');
 
         showScreen(winScreen);
@@ -212,6 +309,7 @@ class CardListPageComponent extends Component{
   playGame() {
     const gameArea = document.getElementById('card-list-container');
     const gamePoints = document.getElementById('game-points');
+    const gameStat = this.getStat();
 
     if (!gameArea || !gamePoints) return;
 
@@ -237,6 +335,7 @@ class CardListPageComponent extends Component{
         this.count++;
         this.cardSound(correct);
 
+
         gamePoints.insertAdjacentHTML('beforeend', `
           <img src="${starWin}" class="img-stars">
         `);
@@ -249,6 +348,9 @@ class CardListPageComponent extends Component{
 
           this.cardSound();
         }, 500);
+
+        this.setStat(word, 'guessed');
+
       } else {
         this.cardSound(err);
 
@@ -257,6 +359,8 @@ class CardListPageComponent extends Component{
         `);
 
         this.errorAnswer++;
+
+        this.setStat(word, 'error');
 
         setTimeout(() => {
 
@@ -280,6 +384,14 @@ class CardListPageComponent extends Component{
     };
 
     toggle.addEventListener('change', handleSwitch)
+  }
+
+  noErrors(node) {
+    node.innerHTML = `
+      <div class="info-msg">
+        <span>Вы еще не совершали ошибок!</span>
+      </div><br>
+    `;
   }
 }
 

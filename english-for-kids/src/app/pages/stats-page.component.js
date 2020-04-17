@@ -1,66 +1,131 @@
 import { Component } from "../../lib";
+import { cards } from '../../lib/data/cards';
 
 class StatsPageComponent extends Component {
   constructor(config) {
     super(config)
   }
 
-  onLoad() {
-    this.onLoadTasks()
+  getStat() {
+    return localStorage.getItem('stat');
   }
 
-  onLoadTasks() {
-    sessionStorage.clear();
-
-    const tbody = document.querySelector('.list tbody');
-
-    if (!localStorage.length) {
-      tbody.insertAdjacentHTML('beforeend', `
-        <hr>
-        <span class="no-task">Еhere is no task</span><button class="btn-link"><a href="/">Create task</a></button>
-        <hr>
-        `);
-      return;
+  events() {
+    return {
+      'click #stats-game': 'sortTable',
+      'click #repeat-words': 'goToRepeatPage',
+      'click #reset-stats': 'resetStats'
     }
+  }
 
-    const tasks = new Set();
-    let idx = 1;
+  resetStats() {
+    localStorage.clear();
+    this.onLoad();
+  }
 
-    tbody.insertAdjacentHTML('beforeend', `
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Date</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Open</th>
-        </tr>
-        `);
+  goToRepeatPage(e) {
+    e.preventDefault();
+    const link = document.getElementById('repeat-link');
+    if (!link) return;
+    const event = new Event('click', { bubbles: true });
+    link.dispatchEvent(event);
+  }
 
-    for (const task in localStorage) {
-      if (localStorage.hasOwnProperty(task)){
-        const { title, date, desc, id, completed } = JSON.parse(localStorage.getItem(task));
-        const taskDate = new Date(date);
-        const status = completed ? '<span class="complete">Completed</span>'
-          : +taskDate < Date.now() ? '<span class="outdated">Outdated</span>'
-          : '<span class="active">Active</span>';
-        tbody.insertAdjacentHTML('beforeend', `
-        <tr>
-          <td class="no-resize">${idx++}</td>
-          <td class="no-resize">${title}</td>
-          <td class="no-resize">${new Date(date).toLocaleDateString('ru')}</td>
-          <td class="resize">${desc}</td>
-          <td class="no-resize">${status}</td>
-          <td class="no-resize"><button class="btn-link"><a href="/task-${id}">open</a></button</td>
-        </tr>
-        `);
+  sortTable(e) {
+    const th = e.target;
+    const tableContent = document.getElementById('table-content');
+
+    const sortTable = (idx, type, asc) => {
+      const rowsArray = Array.from(tableContent.rows);
+      let compare;
+
+      if (type === 'number') {
+        compare = (rowA, rowB) => {
+          return rowA.cells[idx].innerHTML - rowB.cells[idx].innerHTML;
+        };
+      } else {
+        compare = (rowA, rowB) => {
+          return rowA.cells[idx].innerHTML > rowB.cells[idx].innerHTML ? 1 : -1;
+        };
       }
-    }
+      rowsArray.sort(compare);
+
+      if (asc) rowsArray.reverse();
+
+      tableContent.append(...rowsArray);
+    };
+
+    if (!th || !tableContent || th.tagName !== 'TH') return;
+    const ths = th.parentNode.querySelectorAll('th');
+    let asc;
+
+    ths.forEach(el => {
+      if (el === th) {
+        asc = th.classList.contains('asc');
+        th.classList.add('sorted');
+
+        if (asc) {
+          th.classList.remove('asc');
+        } else {
+          th.classList.add('asc');
+        }
+        return;
+      }
+      el.removeAttribute('class');
+    });
+
+    tableContent.className = `sorted-col-${th.cellIndex + 1}`;
+    sortTable(th.cellIndex, th.dataset.type, asc);
   }
+
+  onLoad() {
+    const table = document.getElementById('stats-game');
+    const categories = cards.categories.map(cat => ({name: cat.name, key: cat.url.slice(1)}));
+    let tbody = '';
+    let json = this.getStat();
+
+    if (json) json = JSON.parse(json);
+
+    categories.forEach(el => {
+      tbody += `${cards[el.key].map(group => {
+        let click = 0, guessed = 0, error = 0, percent = '';
+        const wordStat = json ? json[group.word] : 0;
+        
+        if (json) { 
+          click = wordStat ? wordStat.click : 0;
+          guessed = wordStat ? wordStat.guessed : 0;
+          error = wordStat ? wordStat.error : 0;
+          if (!guessed && error) {
+            percent = 100;
+          } else if (guessed && error) {
+            percent = (error / guessed * 100).toFixed(2);            
+          }
+        }
+        
+        return `
+        <tr>
+          <td class="td-1 fixed-col">
+            ${group.word[0].toUpperCase()}${group.word.slice(1)}
+          </td>
+          <td class="td-2">${el.name}</td>
+          <td class="td-3">
+            ${group.translation[0].toUpperCase()}${group.translation.slice(1)}
+          </td>
+          <td class="td-4">${click}</td>
+          <td class="td-5">${guessed}</td>
+          <td class="td-6">${error}</td>
+          <td class="td-7">${percent}</td>
+        </tr>`
+      }).join('')}
+        `;
+    });
+    table.tBodies[0].innerHTML = tbody;
+  }
+
 }
 
 export const statsPageComponent = new StatsPageComponent({
-  selector: '#app-list-page',
+  selector: '#app-stats-page',
   template: require('./html/stats.html'),
-  title: () => 'Tasks list'
+  title: () => 'Stats'
 });

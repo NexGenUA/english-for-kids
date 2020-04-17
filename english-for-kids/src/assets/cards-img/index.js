@@ -69,6 +69,25 @@ import tired from './tired.jpg';
 import turtle from './turtle.jpg';
 import unfriendly from './unfriendly.jpg';
 import young from './young.jpg';
+import table from './table.jpg';
+import lamp from './lamp.jpg';
+import door from './door.jpg';
+import cupboard from './cupboard.jpg';
+import fridge from './fridge.jpg';
+import window from './window.jpg';
+import armchair from './armchair.jpg';
+import television from './television.jpg';
+import sidewalk from './sidewalk.jpg';
+import road from './road.jpg';
+import tree from './tree.jpg';
+import grass from './grass.jpg';
+import river from './river.jpg';
+import bus from './bus.jpg';
+import train from './train.jpg';
+import sun from './sun.jpg';
+import house from './house.jpg';
+import outdoors from './outdoors.jpg';
+
 
 export {
   angry,
@@ -141,5 +160,23 @@ export {
   tired,
   turtle,
   unfriendly,
-  young
+  young,
+  table,
+  lamp,
+  door,
+  cupboard,
+  fridge,
+  window,
+  armchair,
+  television,
+  sidewalk,
+  road,
+  tree,
+  grass,
+  river,
+  bus,
+  train,
+  sun,
+  house,
+  outdoors
 }

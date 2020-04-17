@@ -6,13 +6,14 @@ const routes = new Set([
   '/',
   '/action-a',
   '/action-b',
-  '/action-c',
-  '/adjective',
+  '/outdoors',
+  '/house',
   '/animal-a',
   '/animal-b',
   '/clothes',
   '/emotion',
-  '/stats'
+  '/stats',
+  '/repeat'
 ]);
 const PORT = process.env.PORT || 5000;
 

@@ -8,6 +8,16 @@
   flex-wrap: wrap;
   position: relative;
 
+  & .info-msg {
+    width: 90vw;
+    display: flex;
+    color: rgb(100, 100, 100);
+    font-size: 25px;
+    font-weight: 600;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+
   & .game-points {
     position: absolute;
     height: 40px;
@@ -17,6 +27,7 @@
     justify-content: flex-end;
     overflow: hidden;
     margin: 0 10px;
+    background-size: 300px 250px;//TODO
 
     & .img-stars {
       width: 40px;
@@ -205,4 +216,10 @@
     font-weight: 600;
     font-size: 25px;
   }
+}
+
+.wrap-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
