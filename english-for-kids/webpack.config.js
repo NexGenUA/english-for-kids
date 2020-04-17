@@ -6,7 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 
-  entry: ['./src/index.js', './src/styles/style.scss'],
+  entry: ['@babel/polyfill', './src/index.js', './src/styles/style.scss'],
   output: {
     filename: '[hash].bundle.js',
     path: path.resolve(__dirname, 'public'),
@@ -68,7 +68,21 @@ module.exports = {
           outputPath: 'assets/audio'
         },
       },
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env'
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties'
+            ]
+          }
+        }
+      }
     ],
   },
 };
