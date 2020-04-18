@@ -178,6 +178,13 @@
     letter-spacing: 2px;
     text-transform: uppercase;
   }
+
+  @media screen and (max-width: 375px) {
+
+    & .cards-collect__rotate {
+      margin: 10px 3px;
+    }
+  }
 }
 
 .win-screen, .lose-screen {

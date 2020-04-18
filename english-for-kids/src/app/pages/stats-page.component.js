@@ -19,7 +19,7 @@ class StatsPageComponent extends Component {
   }
 
   resetStats() {
-    localStorage.clear();
+    localStorage.removeItem('stat');
     this.onLoad();
   }
 
@@ -95,7 +95,9 @@ class StatsPageComponent extends Component {
           click = wordStat ? wordStat.click : 0;
           guessed = wordStat ? wordStat.guessed : 0;
           error = wordStat ? wordStat.error : 0;
-          if (!guessed && error) {
+          if (guessed && !error) {
+            percent = 0;
+          } else if (!guessed && error) {
             percent = 100;
           } else if (guessed && error) {
             percent = (error / guessed * 100).toFixed(2);            
