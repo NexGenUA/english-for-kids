@@ -1,6 +1,6 @@
 import { statsPageComponent } from './pages/stats-page.component';
 import { homePageComponent } from './pages/home-page.component';
-import { notFoundPageComponent } from './pages/404-page';
+import { notFoundPageComponent } from './pages/404-page.componennt';
 import { cardListPageComponent } from './pages/card-list-page.component';
 
 export const appRoutes = [
