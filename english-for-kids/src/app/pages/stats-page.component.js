@@ -1,11 +1,7 @@
-import { Component } from "../../lib";
+import { Component } from '../../lib';
 import { cards } from '../../lib/data/cards';
 
 class StatsPageComponent extends Component {
-  constructor(config) {
-    super(config)
-  }
-
   getStat() {
     return localStorage.getItem('stat');
   }
@@ -14,8 +10,8 @@ class StatsPageComponent extends Component {
     return {
       'click #stats-game': 'sortTable',
       'click #repeat-words': 'goToRepeatPage',
-      'click #reset-stats': 'resetStats'
-    }
+      'click #reset-stats': 'resetStats',
+    };
   }
 
   resetStats() {
@@ -40,13 +36,9 @@ class StatsPageComponent extends Component {
       let compare;
 
       if (type === 'number') {
-        compare = (rowA, rowB) => {
-          return rowA.cells[idx].innerHTML - rowB.cells[idx].innerHTML;
-        };
+        compare = (rowA, rowB) => rowA.cells[idx].innerHTML - rowB.cells[idx].innerHTML;
       } else {
-        compare = (rowA, rowB) => {
-          return rowA.cells[idx].innerHTML > rowB.cells[idx].innerHTML ? 1 : -1;
-        };
+        compare = (rowA, rowB) => (rowA.cells[idx].innerHTML > rowB.cells[idx].innerHTML ? 1 : -1);
       }
       rowsArray.sort(compare);
 
@@ -80,7 +72,7 @@ class StatsPageComponent extends Component {
 
   onLoad() {
     const table = document.getElementById('stats-game');
-    const categories = cards.categories.map(cat => ({name: cat.name, key: cat.url.slice(1)}));
+    const categories = cards.categories.map(cat => ({ name: cat.name, key: cat.url.slice(1) }));
     let tbody = '';
     let json = this.getStat();
 
@@ -88,10 +80,10 @@ class StatsPageComponent extends Component {
 
     categories.forEach(el => {
       tbody += `${cards[el.key].map(group => {
-        let click = 0, guessed = 0, error = 0, percent = '';
+        let click = 0; let guessed = 0; let error = 0; let percent = '';
         const wordStat = json ? json[group.word] : 0;
-        
-        if (json) { 
+
+        if (json) {
           click = wordStat ? wordStat.click : 0;
           guessed = wordStat ? wordStat.guessed : 0;
           error = wordStat ? wordStat.error : 0;
@@ -100,10 +92,10 @@ class StatsPageComponent extends Component {
           } else if (!guessed && error) {
             percent = 100;
           } else if (guessed && error) {
-            percent = (error / guessed * 100).toFixed(2);            
+            percent = (error / (guessed + error) * 100).toFixed(2);
           }
         }
-        
+
         return `
         <tr>
           <td class="td-1 fixed-col">
@@ -117,17 +109,16 @@ class StatsPageComponent extends Component {
           <td class="td-5">${guessed}</td>
           <td class="td-6">${error}</td>
           <td class="td-7">${percent}</td>
-        </tr>`
+        </tr>`;
       }).join('')}
         `;
     });
     table.tBodies[0].innerHTML = tbody;
   }
-
 }
 
 export const statsPageComponent = new StatsPageComponent({
   selector: '#app-stats-page',
   template: require('./html/stats.html'),
-  title: () => 'Stats'
+  title: () => 'Stats',
 });

@@ -4,15 +4,12 @@ import { appHeader } from './common/app.header';
 import { appRoutes } from './app.routes';
 
 class AppModule extends MainModule {
-  constructor(config) {
-    super(config);
-  }
 }
 
 export const appModule = new AppModule({
   components: [
-    appHeader
+    appHeader,
   ],
   main: appComponent,
-  routes: appRoutes
+  routes: appRoutes,
 });

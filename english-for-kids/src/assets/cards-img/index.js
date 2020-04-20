@@ -142,5 +142,5 @@ export {
   train,
   sun,
   house,
-  outdoors
-}
+  outdoors,
+};

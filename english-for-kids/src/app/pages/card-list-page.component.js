@@ -1,14 +1,13 @@
-import { Component, router, util } from "../../lib";
+import { Component, router } from '../../lib';
 import { cards } from '../../lib/data/cards';
 import err from '../../assets/cards-audio/error.mp3';
 import correct from '../../assets/cards-audio/correct.mp3';
-import repeat from '../../assets/cards-img/repeat.svg';
 import star from '../../assets/cards-img/star.svg';
 import starWin from '../../assets/cards-img/star-win.svg';
 import success from '../../assets/cards-audio/success.mp3';
 import failure from '../../assets/cards-audio/failure.mp3';
 
-class CardListPageComponent extends Component{
+class CardListPageComponent extends Component {
   constructor(config) {
     super(config);
     this.resetValues();
@@ -32,7 +31,7 @@ class CardListPageComponent extends Component{
       'click #card-list': 'playSound',
       'click .card-list': 'rotateCard',
       'click #start-game': 'startGame',
-    }
+    };
   }
 
   setStat(word, prop) {
@@ -62,7 +61,7 @@ class CardListPageComponent extends Component{
       click: 0,
       guessed: 0,
       error: 0,
-    }
+    };
   }
 
   getStat() {
@@ -72,7 +71,7 @@ class CardListPageComponent extends Component{
   playSound(e) {
     if (this.backside) return;
 
-    const target = e.target;
+    const { target } = e;
 
     if (target.classList.contains('cards-collect__rotate-arrows')) return;
 
@@ -90,21 +89,20 @@ class CardListPageComponent extends Component{
 
     const word = card.dataset.cardName;
     this.setStat(word, 'click');
-
   }
 
   rotateCard(e) {
-    const target = e.target;
+    const { target } = e;
     if (!target || !target.closest('.can-rotate')) return;
     const card = target.closest('.cards-collect__rotate');
     if (!card) return;
     card.classList.add('reverse');
-    const {left, top} = card.getBoundingClientRect();
+    const { left, top } = card.getBoundingClientRect();
     const [width, height] = [card.offsetWidth, card.offsetHeight];
     this.backside = true;
 
-    const isOut = e => {
-      const {clientX: x, clientY: y} = e;
+    const isOut = (event) => {
+      const { clientX: x, clientY: y } = event;
       if (x < left || x > left + width
         || y < top || y > top + height) {
         this.backside = false;
@@ -149,16 +147,16 @@ class CardListPageComponent extends Component{
         <div class="cards-collect__front-side" style="background-image: url(${list.image})">  
           <div class="cards-collect__word">
             <span>${list.word}</span>
-            </div>
+          </div>
+        <div class="can-rotate">
+          <span class="cards-collect__rotate-arrows rotate-card"></span>
+          <span class="cards-collect__static-arrows"></span>
+        </div>
         </div>
         <div class="cards-collect__back-side" style="background-image: url(${list.image})">  
           <div class="cards-collect__word">
             <span>${list.translation}</span>
-            </div>
-        </div>
-        <div class="can-rotate">
-          <span class="cards-collect__rotate-arrows rotate-card"></span>
-          <span class="cards-collect__static-arrows"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -176,7 +174,6 @@ class CardListPageComponent extends Component{
       }
 
       for (const [key, value] of Object.entries(json)) {
-
         if (value.error) {
           difficultWords.push([key, value.error]);
         }
@@ -194,44 +191,48 @@ class CardListPageComponent extends Component{
       const cardsOfWords = [];
 
       for (const collect in cards) {
-        cards[collect].forEach(card => {
-          const word = card.word;
+        cards[collect].forEach((card) => {
+          const { word } = card;
           if (word && difficultWords.includes(word)) {
-            cardsOfWords.push(card)
+            cardsOfWords.push(card);
           }
         });
       }
 
-      this.playList = cardsOfWords.map(card => ({ word: card.word, audioSrc: card.audioSrc }));
+      this.playList = cardsOfWords.map((card) => ({ word: card.word, audioSrc: card.audioSrc }));
       cardsOfWords.forEach(addCardList);
       return;
     }
 
-    this.playList = cards[collectionName].map(card => ({ word: card.word, audioSrc: card.audioSrc }));
+    this.playList = cards[collectionName].map(card => (
+      { word: card.word, audioSrc: card.audioSrc }
+    ));
     cards[collectionName].forEach(addCardList);
   }
 
-  static getTitle () {
+  static getTitle() {
     const title = {
       'action-a': 'Action (set A)',
       'action-b': 'Action (set B)',
-      'outdoors': 'Outdoors',
-      'house': 'House',
+      outdoors: 'Outdoors',
+      house: 'House',
       'animal-a': 'Animal (set A)',
       'animal-b': 'Animal (set B)',
-      'clothes': 'Clothes',
-      'emotion': 'Emotion',
-      'repeat': 'Repeat difficult words'
+      clothes: 'Clothes',
+      emotion: 'Emotion',
+      repeat: 'Repeat difficult words',
     };
-    return title[router.getUrl()]
+    return title[router.getUrl()];
   }
 
-  startGame(e) {
+  startGame() {
     this.isSound = true;
 
     if (!this.playList) return;
 
-    setTimeout(() => this.isSound = false,500);
+    setTimeout(() => {
+      this.isSound = false;
+    }, 500);
 
     if (this.gameOn) {
       this.audio.play();
@@ -259,7 +260,7 @@ class CardListPageComponent extends Component{
 
     const src = this.playList[this.count];
     const mainPageLink = document.getElementById('main-page');
-    const clickEvent = new Event('click', { bubbles:true });
+    const clickEvent = new Event('click', { bubbles: true });
 
     if (!src) {
       this.gameOver = true;
@@ -285,7 +286,6 @@ class CardListPageComponent extends Component{
         errorMessage.innerHTML = `${errors} error${errors > 1 ? 's' : ''}`;
 
         showScreen(loseScreen);
-
       } else {
         this.audio.src = success;
         const winScreen = document.getElementById('win-screen');
@@ -294,7 +294,9 @@ class CardListPageComponent extends Component{
       }
       this.audio.play();
       if (this.isSound) return;
-      setTimeout(() => this.isSound = false,500);
+      setTimeout(() => {
+        this.isSound = false;
+      }, 500);
       return;
     }
 
@@ -303,18 +305,18 @@ class CardListPageComponent extends Component{
     this.audio.src = audioSrc || src.audioSrc;
     this.audio.play();
     if (this.isSound) return;
-    setTimeout(() => this.isSound = false,500);
+    setTimeout(() => {
+      this.isSound = false;
+    }, 500);
   }
 
   playGame() {
     const gameArea = document.getElementById('card-list-container');
     const gamePoints = document.getElementById('game-points');
-    const gameStat = this.getStat();
 
     if (!gameArea || !gamePoints) return;
 
     const gameCore = e => {
-
       if (!this.gameOn) {
         gameArea.removeEventListener('click', gameCore);
         return;
@@ -337,25 +339,25 @@ class CardListPageComponent extends Component{
 
 
         gamePoints.insertAdjacentHTML('beforeend', `
-          <img src="${starWin}" class="img-stars">
+          <img src="${starWin}" class="img-stars" alt="good">
         `);
 
         this.correctAnswer++;
 
         setTimeout(() => {
-
-          setTimeout(() => this.isSound = false,500);
+          setTimeout(() => {
+            this.isSound = false;
+          }, 500);
 
           this.cardSound();
         }, 500);
 
         this.setStat(word, 'guessed');
-
       } else {
         this.cardSound(err);
 
         gamePoints.insertAdjacentHTML('beforeend', `
-          <img src="${star}" class="img-stars">
+          <img src="${star}" class="img-stars" alt="bad">
         `);
 
         this.errorAnswer++;
@@ -363,8 +365,9 @@ class CardListPageComponent extends Component{
         this.setStat(word, 'error');
 
         setTimeout(() => {
-
-          setTimeout(() => this.isSound = false,500);
+          setTimeout(() => {
+            this.isSound = false;
+          }, 500);
 
           this.cardSound();
         }, 500);
@@ -376,14 +379,14 @@ class CardListPageComponent extends Component{
 
   watchCheck() {
     const toggle = document.getElementById('switch-game-mode');
-    const handleSwitch = e => {
+    const handleSwitch = () => {
       const container = document.getElementById('card-list-container');
       if (container) container.innerHTML = '';
       toggle.removeEventListener('change', handleSwitch);
       this.onLoad();
     };
 
-    toggle.addEventListener('change', handleSwitch)
+    toggle.addEventListener('change', handleSwitch);
   }
 
   noErrors(node) {
@@ -398,5 +401,5 @@ class CardListPageComponent extends Component{
 export const cardListPageComponent = new CardListPageComponent({
   selector: '#app-card-list-page',
   template: require('./html/card-list.html'),
-  title: CardListPageComponent.getTitle
+  title: CardListPageComponent.getTitle,
 });

@@ -1,14 +1,10 @@
-import { Component } from "../../lib";
+import { Component } from '../../lib';
 
-class AppHeader extends Component{
-  constructor(config) {
-    super(config)
-  }
-
+class AppHeader extends Component {
   events() {
     return {
-     'change #switch-game-mode': 'changeGameMode',
-    }
+      'change #switch-game-mode': 'changeGameMode',
+    };
   }
 
   changeGameMode(e) {
@@ -56,11 +52,11 @@ class AppHeader extends Component{
       if (target.closest('.menu')) return;
 
       hideMenu();
-    })
+    });
   }
 }
 
 export const appHeader = new AppHeader({
   selector: '#header',
-  template: require('../pages/html/header.html')
+  template: require('../pages/html/header.html'),
 });

@@ -1,5 +1,15 @@
 import { router } from '../tools/router';
 
+const setActiveLink = () => {
+  for (const link of document.querySelectorAll('.menu a')) {
+    if (link.pathname === window.location.pathname) {
+      link.classList.add('active-menu-link');
+    } else {
+      link.classList.remove('active-menu-link');
+    }
+  }
+};
+
 export class MainModule {
   constructor(config) {
     this.components = config.components;
@@ -8,7 +18,7 @@ export class MainModule {
   }
 
   start() {
-    window.addEventListener('DOMContentLoaded', (event) => {
+    window.addEventListener('DOMContentLoaded', () => {
       const switchGame = document.getElementById('switch-game');
       const gameMode = localStorage.getItem('gameMode');
       switchGame.checked = gameMode === 'true';
@@ -26,14 +36,13 @@ export class MainModule {
   initRoutes() {
     const linkClick = e => {
       e.preventDefault();
-      let state;
       const link = e.target.closest('a');
       if (!link) return;
       if (link.tagName !== 'A') return;
-      state = {
-        page: link.getAttribute('href')
+      const state = {
+        page: link.getAttribute('href'),
       };
-      history.pushState(state, '', state.page);
+      window.history.pushState(state, '', state.page);
       this.renderRoute();
     };
 
@@ -44,7 +53,7 @@ export class MainModule {
 
     window.addEventListener('popstate', () => {
       this.renderRoute();
-    })
+    });
   }
 
   renderRoute() {
@@ -61,16 +70,4 @@ export class MainModule {
     c.render();
     if (c.onLoad) c.onLoad();
   }
-
 }
-
-function setActiveLink() {
-  for (const link of document.querySelectorAll('.menu a')) {
-    if (link.pathname === location.pathname) {
-      link.classList.add('active-menu-link');
-    } else {
-      link.classList.remove('active-menu-link');
-    }
-  }
-}
-

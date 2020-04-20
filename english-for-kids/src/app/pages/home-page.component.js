@@ -1,11 +1,7 @@
-import { Component } from "../../lib";
+import { Component } from '../../lib';
 import { cards } from '../../lib/data/cards';
 
 class HomePageComponent extends Component {
-  constructor(config) {
-    super(config)
-  }
-
   onLoad() {
     this.toggleTheme();
     const categories = document.getElementById('categories-list');
@@ -24,5 +20,5 @@ class HomePageComponent extends Component {
 export const homePageComponent = new HomePageComponent({
   selector: '#app-home-page',
   template: require('./html/home.html'),
-  title: () => 'English for kids'
+  title: () => 'English for kids',
 });

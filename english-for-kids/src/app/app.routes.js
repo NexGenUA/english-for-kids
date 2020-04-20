@@ -5,17 +5,20 @@ import { cardListPageComponent } from './pages/card-list-page.component';
 
 export const appRoutes = [
   { path: '', component: notFoundPageComponent },
-  { path: [
-    'action-a',
-    'action-b',
-    'outdoors',
-    'house',
-    'animal-a',
-    'animal-b',
-    'clothes',
-    'emotion',
-    'repeat'
-    ], component: cardListPageComponent },
+  {
+    path: [
+      'action-a',
+      'action-b',
+      'outdoors',
+      'house',
+      'animal-a',
+      'animal-b',
+      'clothes',
+      'emotion',
+      'repeat',
+    ],
+    component: cardListPageComponent,
+  },
   { path: ['/'], component: homePageComponent },
-  { path: ['stats'], component: statsPageComponent }
+  { path: ['stats'], component: statsPageComponent },
 ];

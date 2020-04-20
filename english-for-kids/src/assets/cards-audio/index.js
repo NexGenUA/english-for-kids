@@ -135,5 +135,5 @@ export {
   river,
   bus,
   train,
-  sun
-}
+  sun,
+};
