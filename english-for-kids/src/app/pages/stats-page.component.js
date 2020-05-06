@@ -80,7 +80,7 @@ class StatsPageComponent extends Component {
 
     categories.forEach(el => {
       tbody += `${cards[el.key].map(group => {
-        let click = 0; let guessed = 0; let error = 0; let percent = '';
+        let click = 0; let guessed = 0; let error = 0; let percent = 0;
         const wordStat = json ? json[group.word] : 0;
 
         if (json) {

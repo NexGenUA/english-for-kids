@@ -329,9 +329,10 @@ class CardListPageComponent extends Component {
       const word = card.dataset.cardName;
 
       if (this.correct.includes(word)) return;
+      const correctWord = this.playList[this.count].word;
       this.isSound = true;
 
-      if (this.playList[this.count].word === word) {
+      if (correctWord === word) {
         card.classList.add('correct');
         this.correct.push(word);
         this.count++;
@@ -362,7 +363,7 @@ class CardListPageComponent extends Component {
 
         this.errorAnswer++;
 
-        this.setStat(word, 'error');
+        this.setStat(correctWord, 'error');
 
         setTimeout(() => {
           setTimeout(() => {
