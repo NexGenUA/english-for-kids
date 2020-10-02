@@ -25,9 +25,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[hash].style.css',
     }),
-    new CopyPlugin([
-      { from: './src/assets/fav', to: './' },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: './src/assets/fav', to: './',
+        },
+      ],
+    }),
   ],
 
   module: {
@@ -50,7 +54,7 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
         loader: 'file-loader',
-        options: { outputPath: 'assets/fonts' },
+        options: {outputPath: 'assets/fonts'},
       },
       {
         test: /\.(jpg|jpeg|png|gif)$/i,
