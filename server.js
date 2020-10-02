@@ -1,8 +1,10 @@
-const http = require('http');
-const fs = require('fs');
-const mime = require('mime');
+const express = require('express');
+const path = require('path');
 
-const routes = new Set([
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+const routes = [
   '/',
   '/action-a',
   '/action-b',
@@ -14,25 +16,27 @@ const routes = new Set([
   '/emotion',
   '/stats',
   '/repeat',
-]);
-const PORT = process.env.PORT || 5000;
+];
 
-const server = http.createServer((req, res) => {
-  if (routes.has(req.url)) {
-    res.setHeader('Content-Type', 'text/html');
-    fs.ReadStream(`${__dirname}/public/index.html`).pipe(res);
-  } else {
-    fs.readFile(`./public/${req.url}`, err => {
-      if (!err) {
-        const mimeType = mime.getType(req.url) || 'text/plain';
-        res.setHeader('Content-type', mimeType);
-        fs.ReadStream(`${__dirname}/public/${req.url}`).pipe(res);
-      } else {
-        res.writeHead(404, 'Not Found');
-        fs.ReadStream(`${__dirname}/public/index.html`).pipe(res);
-      }
-    });
-  }
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
 });
 
-server.listen(PORT, () => console.log(`Node.js web server at port ${PORT} is running... follow url http://localhost:5000/`));
+app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+  if (!routes.some(route => {
+    const set = new Set(req.url.split(/\?/));
+    return set.has(route);
+  })) {
+    res.status(404);
+  }
+  res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Node.js web server at address http://localhost:${PORT} is running...`);
+});
