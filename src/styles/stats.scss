@@ -1,0 +1,154 @@
+@import 'var';
+
+.stats-game {
+  background-color: white;
+  border: $table-border;
+  border: initial;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: rgba(0,0,0,.65);
+  width: 100%;
+
+  .sorted-col-1 .td-1,
+  .sorted-col-2 .td-2,
+  .sorted-col-3 .td-3,
+  .sorted-col-4 .td-4,
+  .sorted-col-5 .td-5,
+  .sorted-col-6 .td-6,
+  .sorted-col-7 .td-7 {
+    background-color: rgb(250, 250, 250);
+  }
+
+  & td, th {
+    border: $table-border;
+    padding: 5px 10px 5px 5px;
+    white-space: nowrap;
+  }
+
+  & #table-content tr:hover td {
+    background-color: rgb(245, 245, 245);
+  }
+
+  & th {
+    font-size: 11px;
+    cursor: pointer;
+    background-color: #70c6de;
+    user-select: none;
+    position: relative;
+
+    &:hover {
+      background-color: #9fcbde;
+    }
+  }
+
+  & th::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: 3px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 7px solid rgb(100, 100, 100);
+  }
+
+  & th::before {
+    content: '';
+    position: absolute;
+    top: 55%;
+    right: 3px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid rgb(100, 100, 100);
+  }
+
+  & .sorted {
+    position: relative;
+
+    &::before {
+      border-top: 7px solid coral;
+    }
+
+    &.asc::after {
+      border-bottom: 7px solid coral;
+    }
+
+    &.asc::before {
+      border-top: 7px solid rgb(100, 100, 100);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 2vw;
+
+    & th {
+      font-size: 2vw;
+    }
+
+    & th::after {
+      border-left: 1vw solid transparent;
+      border-right: 1vw solid transparent;
+      border-bottom: 1.3vw solid rgb(100, 100, 100);
+    }
+
+    & th::before {
+      border-left: 1vw solid transparent;
+      border-right: 1vw solid transparent;
+      border-top: 1.3vw solid rgb(100, 100, 100);
+    }
+
+    & .sorted {
+
+      &::before {
+        border-top: 1.3vw solid coral;
+      }
+
+      &.asc::after {
+        border-bottom: 1.3vw solid coral;
+      }
+
+      &.asc::before {
+        border-top: 1.3vw solid rgb(100, 100, 100);
+      }
+    }
+  }
+}
+
+.h1-stat {
+  color: rgb(100, 100, 100);
+}
+
+.stats-button {
+  border: 0;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: rgb(250, 250, 250);
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &.reset-stats {
+    background-color: rgb(68, 151, 236);
+    margin-right: 10px;
+  }
+
+  &.repeat-words {
+    background-color: coral;
+  }
+
+  @media screen and (max-width: 375px) {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

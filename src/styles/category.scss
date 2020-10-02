@@ -1,0 +1,68 @@
+@import 'var';
+@import 'mixin';
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 50px 0;
+
+  & .category-card {
+    @include card;
+    background-color: white;
+    align-items: center;
+    transition: background .3s ease;
+    user-select: none;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100px;
+      background: linear-gradient($play-color, $play-color-gradient);
+      border-radius: 5px 5px 0 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 0;
+    }
+  }
+
+  & .category-card__image {
+    height: 140px;
+    position: relative;
+    left: -30px;
+  }
+
+  & .category-card__image-wrap {
+    position: relative;
+    top: -20px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid white;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  & .category-card__title {
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    font-size: 20px;
+    color: $play-color;
+    font-weight: 600;
+  }
+
+  &.game-on {
+
+    & .category-card {
+
+      &::after {
+        background: $gradient-game-on;
+      }
+    }
+    & .category-card__title {
+      color: $game-on-color;
+    }
+  }
+}

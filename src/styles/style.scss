@@ -1,0 +1,20 @@
+* {
+  font-family: Roboto, Oxygen-Sans, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: url(../assets/background.png);
+}
+
+@import '~normalize-scss/sass/normalize/import-now';
+@import 'main';
+@import 'header';
+@import 'menu';
+@import 'switch';
+@import 'spinner';
+@import 'hamburger';
+@import 'category';
+@import 'card-list';
+@import 'stats';
+@import '404';

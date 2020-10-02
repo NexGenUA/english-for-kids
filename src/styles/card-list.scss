@@ -1,0 +1,232 @@
+@import 'mixin';
+@import 'var';
+
+.card-list {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+  flex-wrap: wrap;
+  position: relative;
+
+  & .info-msg {
+    width: 90vw;
+    display: flex;
+    color: rgb(100, 100, 100);
+    font-size: 25px;
+    font-weight: 600;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+
+  & .game-points {
+    position: absolute;
+    height: 40px;
+    width: 100%;
+    top: -35px;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    margin: 0 10px;
+    background-size: 300px 250px;//TODO
+
+    & .img-stars {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &.game-on {
+
+    & .cards-collect__front-side {
+      background-size: 300px 250px;
+    }
+
+    & .cards-collect__rotate-arrows {
+      display: none;
+    }
+    & .cards-collect__static-arrows {
+        display: none;
+    }
+    & .cards-collect__word {
+      display: none;
+    }
+
+    & .start-game {
+      display: block;
+      position: relative;
+      transition: all .3s ease;
+
+      &.repeat {
+        width: 50px;
+        border-radius: 50%;
+
+        &::after {
+          content: url(../assets/cards-img/repeat.svg);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 30px;
+          height: 30px;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+
+  & .start-game {
+    max-width: 500px;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    height: 50px;
+    background: $gradient-game-on;
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: button;
+    display: none;
+    margin-bottom: 50px;
+
+    &:hover{
+      filter: brightness(1.1);
+      font-size: 27px;
+    }
+
+    &:active {
+      font-size: 27px;
+      transform: translateY(1px);
+    }
+  }
+}
+
+.cards-collect {
+  perspective: 500px;
+  position: relative;
+
+  & .hover-correct {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 250px;
+    background-color: white;
+    opacity: .5;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1;
+    display: none;
+  }
+
+  &.correct {
+
+    & .hover-correct {
+      display: block;
+    }
+  }
+
+  & .cards-collect__rotate {
+    @include card;
+    transform-style: preserve-3d;
+
+
+    &.reverse {
+      transform: rotateY(180deg);
+    }
+  }
+
+  & .cards-collect__front-side {
+    @include cards-rotate;
+  }
+
+  & .cards-collect__back-side {
+    @include cards-rotate;
+    transform: rotateY(180deg);
+  }
+
+  & .cards-collect__rotate-arrows {
+    @include arrows;
+    background: url(../assets/cards-img/arrows.gif);
+
+    &:hover + .cards-collect__static-arrows {
+      display: none;
+    }
+  }
+
+  & .cards-collect__static-arrows {
+    @include arrows;
+    background: url(../assets/cards-img/arrows.png);
+
+    &:hover {
+      display: none;
+    }
+  }
+
+  & .cards-collect__word {
+    display: flex;
+    margin-top: 200px;
+    height: 50px;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    color: rgb(105, 105, 105);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 375px) {
+
+    & .cards-collect__rotate {
+      margin: 10px 3px;
+    }
+  }
+}
+
+.win-screen, .lose-screen {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: url(../assets/background.png);
+  display: none;
+}
+
+.win-screen {
+
+  & .win-img {
+    background: url(../assets/cards-img/success.jpg) no-repeat;
+    @include end-game-img;
+  }
+}
+
+
+.lose-screen {
+
+  & .lose-img {
+    background: url(../assets/cards-img/failure.jpg) no-repeat;
+    @include end-game-img;
+  }
+
+  & .error-message {
+    margin-bottom: 10px;
+    color: coral;
+    font-weight: 600;
+    font-size: 25px;
+  }
+}
+
+.wrap-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

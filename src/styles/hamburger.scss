@@ -1,0 +1,54 @@
+@import 'mixin';
+@import 'var';
+
+.menu__hamburger {
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 10;
+
+  &.close {
+
+    .menu__hamburger-line {
+      transition: $transition;
+      opacity: 0;
+
+    }
+
+    &::before {
+      width: 33px;
+      top: -3px;
+      transform: rotate(45deg);
+      transform-origin: left;
+    }
+
+    &::after {
+      width: 33px;
+      transform: rotate(-45deg);
+      bottom: -2px;
+      transform-origin: left;
+    }
+  }
+}
+
+.menu__hamburger-line {
+  @include hamburger-lines;
+  top: calc(50% - 2px);
+  opacity: 1;
+}
+
+.menu__hamburger::before {
+  @include hamburger-lines;
+  content: "";
+  top: 0;
+}
+
+.menu__hamburger::after {
+  @include hamburger-lines;
+  content: "";
+  bottom: 0;
+}

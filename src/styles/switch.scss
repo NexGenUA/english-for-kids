@@ -1,0 +1,86 @@
+@import 'var';
+
+.check {
+  display: none;
+}
+
+.switch {
+  position: relative;
+  cursor: pointer;
+  height: 46px;
+}
+
+.checkbox-play {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  bottom: 11px;
+  right: 22px;
+  color: mistyrose;
+  opacity: 0;
+  transition: all .3s ease;
+  user-select: none;
+}
+
+.checkbox-train {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  left: 17px;
+  bottom: 11px;
+  color: mistyrose;
+  opacity: 1;
+  transition: all .3s ease;
+  user-select: none;
+}
+
+.checkbox {
+  display: inline-block;
+  border-radius: 22px;
+  background: linear-gradient(90deg, $play-color, $play-color-gradient);
+  border: 1px solid #ddd;
+  box-shadow: 0 0 15px 2px lightgrey;
+  width: 136px;
+  height: 44px;
+  position: relative;
+  transition: all .3s ease;
+}
+.checkbox::before {
+  content: url(../assets/switch.png);
+  display: block;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  box-shadow: inset 0 0 0 2px rgb(102, 204, 204), 0 0 0 1px rgb(102, 204, 204);
+  border-radius: 50%;
+  top: -2px;
+  left: 90px;
+  transition: all .3s ease;
+  animation: switch 2s linear infinite;
+  animation-play-state: paused;
+}
+.check:checked ~ .checkbox::before {
+  left: -2px;
+}
+
+.check:checked ~ .checkbox{
+  background: linear-gradient(90deg, rgb(250, 200, 190), rgb(255, 106, 38));
+  transition: all .3s ease;
+}
+
+.check:checked ~ .checkbox-play{
+  opacity: 1;
+}
+
+.check:checked ~ .checkbox-train{
+  opacity: 0;
+}
+
+@keyframes switch {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+.switch:hover .checkbox::before{
+  animation-play-state: running;
+}

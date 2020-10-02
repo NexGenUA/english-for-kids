@@ -1,0 +1,57 @@
+@mixin card {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 250px;
+  margin: 20px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 3px rgb(230, 230, 230);
+  cursor: pointer;
+  transition: box-shadow .2s linear, transform .5s ease;
+
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,.4);
+  }
+}
+
+@mixin arrows {
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+}
+
+@mixin cards-rotate {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-size: 300px 250px;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  border-radius: 5px;
+}
+
+@mixin hamburger-lines {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  background-color: $hamburger-line;
+  border-radius: 2px;
+  height: 4px;
+  width: 32px;
+  transition: $transition;
+}
+
+@mixin end-game-img {
+  width: 25vw;
+  min-width: 300px;
+  min-height: 250px;
+  height: 25vw;
+  background-size: contain;
+}
